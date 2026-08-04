@@ -2,19 +2,6 @@ import os
 import re
 import yt_dlp
 from pyrogram import Client, filters
-from flask import Flask
-from multiprocessing import Process
-
-# Flask web server Render ke port timeout ke liye
-app_flask = Flask('')
-
-@app_flask.route('/')
-def home():
-    return "🤖 Bot is alive and running!"
-
-def run_flask():
-    port = int(os.environ.get("PORT", 8080))
-    app_flask.run(host='0.0.0.0', port=port)
 
 API_ID = 32044345
 API_HASH = "6bd5f117a5b0966be6c51255fac3023e"
@@ -74,9 +61,5 @@ async def download_video(client, message):
         await status_message.edit_text(f"❌ **Error aaya hai:**\n\n{str(e)}")
 
 if __name__ == "__main__":
-    # Flask ko alag process mein chalana taaki Pyrogram ke event loop ko koi dikkat na ho
-    flask_process = Process(target=run_flask)
-    flask_process.start()
-    
     print("🚀 Fast Bot chalu ho raha hai...")
     app.run()
