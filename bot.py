@@ -3,9 +3,9 @@ import re
 import yt_dlp
 from pyrogram import Client, filters
 from flask import Flask
-from threading import Thread
+from multiprocessing import Process
 
-# Flask web server taaki Render ka port timeout error na aaye
+# Flask web server Render ke port timeout ke liye
 app_flask = Flask('')
 
 @app_flask.route('/')
@@ -15,9 +15,6 @@ def home():
 def run_flask():
     port = int(os.environ.get("PORT", 8080))
     app_flask.run(host='0.0.0.0', port=port)
-
-t = Thread(target=run_flask)
-t.start()
 
 API_ID = 32044345
 API_HASH = "6bd5f117a5b0966be6c51255fac3023e"
@@ -57,7 +54,6 @@ async def download_video(client, message):
     try:
         os.makedirs("downloads", exist_ok=True)
 
-
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(clean_url, download=True)
             file_path = ydl.prepare_filename(info_dict)
@@ -77,5 +73,10 @@ async def download_video(client, message):
     except Exception as e:
         await status_message.edit_text(f"❌ **Error aaya hai:**\n\n{str(e)}")
 
-print("🚀 Fast Bot chalu ho raha hai...")
-app.run()
+if __name__ == "__main__":
+    # Flask ko alag process mein chalana taaki Pyrogram ke event loop ko koi dikkat na ho
+    flask_process = Process(target=run_flask)
+    flask_process.start()
+    
+    print("🚀 Fast Bot chalu ho raha hai...")
+    app.run()
