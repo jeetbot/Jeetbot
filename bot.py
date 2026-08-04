@@ -56,6 +56,7 @@ async def download_video(client, message):
 
     try:
         os.makedirs("downloads", exist_ok=True)
+        
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(clean_url, download=True)
