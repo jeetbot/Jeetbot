@@ -5,7 +5,7 @@ from pyrogram import Client, filters
 
 API_ID = 32044345
 API_HASH = "6bd5f117a5b0966be6c51255fac3023e"
-BOT_TOKEN = "8842010032:AAEMAxTHSCdwhL2sX5lRZEAo0mmkcs-eqVQ"
+BOT_TOKEN = "8842010002:AAEMAxTHSCdwhL2sX5lRZEAo0mmkcs-eqVQ"
 
 app = Client("video_downloader_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
